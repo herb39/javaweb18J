@@ -39,24 +39,6 @@ public class MemberJoinOkCommand implements MemberInterface {
 		String email = multipartRequest.getParameter("email") == null ? "" : multipartRequest.getParameter("email");
 		String userInfor = multipartRequest.getParameter("userInfor") == null ? "" : multipartRequest.getParameter("userInfor");
 
-
-		
-//		request.setCharacterEncoding("UTF-8");
-//		// 프로필 사진 업로드 되었는지 ?
-//		String photo = "noimage.jpg";
-//		
-//		String mid = request.getParameter("mid") == null ? "" : request.getParameter("mid");
-//		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-//		String nickName = request.getParameter("nickName") == null ? "" : request.getParameter("nickName");		
-//		String name = request.getParameter("name") == null ? "" : request.getParameter("name");
-//		String gender = request.getParameter("gender") == null ? "" : request.getParameter("gender");
-//		String birthday = request.getParameter("birthday") == null ? "" : request.getParameter("birthday");
-//		String tel = request.getParameter("tel") == null ? "" : request.getParameter("tel");
-//		String address = request.getParameter("address") == null ? "" : request.getParameter("address");
-//		String email = request.getParameter("email") == null ? "" : request.getParameter("email");
-//		String userInfor = request.getParameter("userInfor") == null ? "" : request.getParameter("userInfor");
-		
-		
 		
 		// BackEnd check : DB에 저장되는 자료의 Null값, 길이, 중복여부 체크
 		
