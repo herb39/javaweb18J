@@ -33,20 +33,10 @@ public class MemberDAO {
 				vo.setPwd(rs.getString("pwd"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.setName(rs.getString("name"));
-				vo.setGender(rs.getString("gender"));
-				vo.setBirthday(rs.getString("birthday"));
-				vo.setTel(rs.getString("tel"));
-				vo.setAddress(rs.getString("address"));
 				vo.setEmail(rs.getString("email"));
-				vo.setPhoto(rs.getString("photo"));
-				vo.setUserInfor(rs.getString("userInfor"));
+				vo.setImage(rs.getString("image"));
 				vo.setUserDel(rs.getString("userDel"));
-				vo.setPoint(rs.getInt("point"));
 				vo.setLevel(rs.getInt("level"));
-				vo.setVisitCnt(rs.getInt("visitCnt"));
-				vo.setStartDate(rs.getString("startDate"));
-				vo.setLastDate(rs.getString("lastDate"));
-				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setSalt(rs.getString("salt"));
 			}
 		} catch (SQLException e) {
@@ -61,20 +51,15 @@ public class MemberDAO {
 	public int setMemberJoinOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member values (default,?,?,?,?,?,?,?,?,?,?,?,default,default,default,default,default,default,default,?)";
+			sql = "insert into member values (default,?,?,?,?,?,?,default,default,default,default,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());
 			pstmt.setString(3, vo.getNickName());
 			pstmt.setString(4, vo.getName());
-			pstmt.setString(5, vo.getGender());
-			pstmt.setString(6, vo.getBirthday());
-			pstmt.setString(7, vo.getTel());
-			pstmt.setString(8, vo.getAddress());
-			pstmt.setString(9, vo.getEmail());
-			pstmt.setString(10, vo.getPhoto());
-			pstmt.setString(11, vo.getUserInfor());
-			pstmt.setString(12, vo.getSalt());
+			pstmt.setString(5, vo.getEmail());
+			pstmt.setString(6, vo.getImage());
+			pstmt.setString(7, vo.getSalt());
 			pstmt.executeUpdate();
 			res = 1;
 		} catch (SQLException e) {
@@ -106,42 +91,12 @@ public class MemberDAO {
 		return vo;
 	}
 
-	// 오늘 첫 방문 : 방문카운트 0으로 초기화
-	public void setTodayCntUpdate(String mid) {
-		try {
-			sql = "update member set todayCnt = 0 where mid = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mid);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			getConn.pstmtClose();
-		}
-	}
-
-	// 로그인 시, '총 방문수', '오늘 방문수', '포인트' 누적 + '최종 접속일' 
-	public void setMemberTotalUpdate(String mid, int nowTodayPoint) {
-		
-		try {
-			sql = "update member set visitCnt = visitCnt + 1, todayCnt = todayCnt + 1, Point = ?, lastDate = now() where mid = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, nowTodayPoint);
-			pstmt.setString(2, mid);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
-		} finally {
-			getConn.pstmtClose();
-		}
-	}
-
 	
 	// 전체 회원 리스트
 	public ArrayList<MemberVO> getMemberList(int startIndexNo, int pageSize) {
 		ArrayList<MemberVO> vos = new ArrayList<>();
 		try {
-			sql = "select *, timestampdiff(day, lastDate, now()) deleteDiff from member order by idx desc limit ?,?";
+			sql = "select * from member order by idx desc limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startIndexNo);
 			pstmt.setInt(2, pageSize);
@@ -154,22 +109,11 @@ public class MemberDAO {
 				vo.setPwd(rs.getString("pwd"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.setName(rs.getString("name"));
-				vo.setGender(rs.getString("gender"));
-				vo.setBirthday(rs.getString("birthday"));
-				vo.setTel(rs.getString("tel"));
-				vo.setAddress(rs.getString("address"));
 				vo.setEmail(rs.getString("email"));
-				vo.setPhoto(rs.getString("photo"));
-				vo.setUserInfor(rs.getString("userInfor"));
+				vo.setImage(rs.getString("image"));
 				vo.setUserDel(rs.getString("userDel"));
-				vo.setPoint(rs.getInt("point"));
 				vo.setLevel(rs.getInt("level"));
-				vo.setVisitCnt(rs.getInt("visitCnt"));
-				vo.setStartDate(rs.getString("startDate"));
-				vo.setLastDate(rs.getString("lastDate"));
-				vo.setTodayCnt(rs.getInt("todayCnt"));
 				vo.setSalt(rs.getString("salt"));
-				vo.setDeleteDiff(rs.getInt("deleteDiff"));
 				
 				vos.add(vo);
 			}
@@ -199,21 +143,17 @@ public class MemberDAO {
 		return res;
 	}
 
+	// 유저 정보 수정
 	public int setMemberUpdateOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "update member set nickName=?, name=?, gender=?, birthday=?, tel=?, address=?, email=?, photo=?, userInfor=? where mid = ?";
+			sql = "update member set nickName=?, name=?, email=?, image=? where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getNickName());
 			pstmt.setString(2, vo.getName());
-			pstmt.setString(3, vo.getGender());
-			pstmt.setString(4, vo.getBirthday());
-			pstmt.setString(5, vo.getTel());
-			pstmt.setString(6, vo.getAddress());
-			pstmt.setString(7, vo.getEmail());
-			pstmt.setString(11, vo.getPhoto());
-			pstmt.setString(13, vo.getUserInfor());
-			pstmt.setString(14, vo.getMid());
+			pstmt.setString(3, vo.getEmail());
+			pstmt.setString(4, vo.getImage());
+			pstmt.setString(5, vo.getMid());
 			pstmt.executeUpdate();
 			res = 1;
 		} catch (SQLException e) {

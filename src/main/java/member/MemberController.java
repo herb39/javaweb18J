@@ -20,89 +20,69 @@ public class MemberController extends HttpServlet {
 		
 		String uri = request.getRequestURI();
 		String com = uri.substring(uri.lastIndexOf("/"),uri.lastIndexOf("."));
-		
 		HttpSession session = request.getSession();
-		int level = session.getAttribute("sLevel") == null ? 99 : (int)session.getAttribute("sLevel");
+		int level = session.getAttribute("sLevel") == null ? 101 : (int)session.getAttribute("sLevel");
 		
 		if (com.equals("/MemberLogin")) {
 			command = new MemberLoginCommand();
 			command.execute(request, response);
 			viewPage += "/memberLogin.jsp";
-		}
-		else if (com.equals("/MemberLoginOk")) {
+		} else if (com.equals("/MemberLoginOk")) {
 			command = new MemberLoginOkCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberLogout")) {
+			return;
+		} else if (com.equals("/MemberLogout")) {
 			command = new MemberLogoutCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberJoin")) {
-			viewPage += "/memberJoin.jsp";
-		}
-		else if (com.equals("/MemberJoinOk")) {
-			command = new MemberJoinOkCommand();
-			command.execute(request, response);
-			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberIdCheck")) {
+		} else if (com.equals("/MemberIdCheck")) {
 			command = new MemberIdCheckCommand();
 			command.execute(request, response);
 			viewPage += "/memberIdCheck.jsp";
-		}
-		else if (com.equals("/MemberNickNameCheck")) {
+		} else if (com.equals("/MemberNickNameCheck")) {
 			command = new MemberNickNameCheckCommand();
 			command.execute(request, response);
 			viewPage += "/memberNickNameCheck.jsp";
-		}
-		else if (level > 4) { // 비회원 초기화면으로 보내기
+		} else if (com.equals("/MemberJoinOk")) {
+			command = new MemberJoinOkCommand();
+			command.execute(request, response);
+			return;
+		} else if (level > 4) { // 비회원 초기화면으로 보내기
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
-		}
-		else if (com.equals("/MemberMain")) {
+		} else if (com.equals("/MemberMain")) {
 			command = new MemberMainCommand();
 			command.execute(request, response);
 			viewPage += "/memberMain.jsp";
-		}
-		else if (com.equals("/MemberList")) {
+		} else if (com.equals("/MemberList")) {
 			command = new MemberListCommand();
 			command.execute(request, response);
 			viewPage += "/memberList.jsp";
-		}
-		else if (com.equals("/MemberBoardList")) {
+		} else if (com.equals("/MemberBoardList")) {
 			command = new MemberBoardListCommand();
 			command.execute(request, response);
 			viewPage += "/memberBoardList.jsp";
-		}
-		else if (com.equals("/MemberPwdUpdate")) {
+		} else if (com.equals("/MemberPwdUpdate")) {
 			viewPage += "/memberPwdUpdate.jsp";
-		}
-		else if (com.equals("/MemberPwdUpdateOk")) {
+		} else if (com.equals("/MemberPwdUpdateOk")) {
 			command = new MemberPwdUpdateOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberPwdCheckForm")) {
+		} else if (com.equals("/MemberPwdCheckForm")) {
 			viewPage += "/memberPwdCheckForm.jsp";
-		}
-		else if (com.equals("/MemberPwdCheckOk")) {
+		} else if (com.equals("/MemberPwdCheckOk")) {
 			command = new MemberPwdCheckOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberUpdate")) {
+		} else if (com.equals("/MemberUpdate")) {
 			command = new MemberUpdateCommand();
 			command.execute(request, response);
 			viewPage += "/memberUpdate.jsp";
-		}
-		else if (com.equals("/MemberUpdateOk")) {
+		} else if (com.equals("/MemberUpdateOk")) {
 			command = new MemberUpdateOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		}
-		else if (com.equals("/MemberDeleteAsk")) {
+		} else if (com.equals("/MemberDeleteAsk")) {
 			command = new MemberDeleteAskCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";

@@ -12,8 +12,7 @@ create table member (
 	good		int				default		0,					-- 좋아요 누적
 	reportCnt	int				default		0,					-- 신고 누적 횟수
 	userDel		char(2)			default		'NO',				-- 탈퇴신청여부 OK:탈퇴신청중
-	point		int				default		100,				-- 포인트 가입시100 1회방문10 1일최대50
-	level		int				default		1,					-- 회원등급 0관리자 1준회원 2정회원 3우수회원 4운영자
+	level		int				default		1,					-- 회원등급 0관리자 1~99회원 100운영자
 	salt		char(8)			not null,						-- 비밀번호 보안 해시키
 	primary key (idx, mid)
 );
