@@ -34,16 +34,15 @@ public class MemberLoginOkCommand implements MemberInterface {
 		
 		
 		// 로그인 성공시 처리할 내용 ?
-		// 1.주요필드 세션에 저장  2.오늘방문횟수  3.총 방문수, 방문포인트  4.쿠키에 아이디 저장 ?
 		
-		// 1
+		// 1. 주요필드 세션에 저장
 		HttpSession session = request.getSession();
 		session.setAttribute("sMid", mid);
 		session.setAttribute("sNickName", vo.getNickName());
 		session.setAttribute("sLevel", vo.getLevel());
 		
 		
-		// 4
+		// 2. 쿠키에 아이디 저장 ?
 		Cookie cMid = new Cookie("cMid", mid);
 		if (idSave.equals("on")) {
 			cMid.setMaxAge(60*60*24*7);

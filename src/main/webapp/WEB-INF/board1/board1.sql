@@ -8,11 +8,14 @@ create table board1 (
 	content text not null,					/* 게시글 내용 */
 	hostIp  varchar(40) not null,			/* 글 올린이의 IP */
 	wDate   datetime  default now(),		/* 글 올린 날짜/시간 */
+	level int not null,
 	primary key(idx),
 	foreign key(boardIdx) references board(idx)	-- 외래키 설정
 	on update cascade
 	on delete restrict
 );
+
+alter table board1 add level int not null; 
 
 drop table board1;
 drop table board1Reply;
@@ -27,9 +30,10 @@ create table board1Reply (
 	hostIp varchar(50) not null,		-- 댓글 쓴 PC 고유 IP
 	good	int default 0,				-- '좋아요' 클릭 횟수 누적
 	wDate datetime default now(),		-- 작성 날짜
-	oX	char(1)	not null,				-- 찬반여부
+	oX	varchar(10)	not null default 'X',				-- 찬반여부
 	primary key(idx),					-- 기본키 : 고유번호
 	foreign key(board1Idx) references board1(idx)	-- 외래키 설정
 	on update cascade
 	on delete restrict
 );
+

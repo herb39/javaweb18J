@@ -36,6 +36,7 @@ public class MemberDAO {
 				vo.setEmail(rs.getString("email"));
 				vo.setImage(rs.getString("image"));
 				vo.setUserDel(rs.getString("userDel"));
+				vo.setPoint(rs.getInt("point"));
 				vo.setLevel(rs.getInt("level"));
 				vo.setSalt(rs.getString("salt"));
 			}
@@ -51,7 +52,7 @@ public class MemberDAO {
 	public int setMemberJoinOk(MemberVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into member values (default,?,?,?,?,?,?,default,default,default,default,?)";
+			sql = "insert into member values (default,?,?,?,?,?,?,default,default,default,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getPwd());

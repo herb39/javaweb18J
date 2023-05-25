@@ -1,13 +1,12 @@
 package board1;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Board1ContentCommand implements Board1Interface {
+public class Board1PastContentCommand implements Board1Interface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,7 +18,7 @@ public class Board1ContentCommand implements Board1Interface {
 		// 현재 선택된 게시글(idx)의 전체 내용 가져오기
 		
 		
-		vo = dao.getBoard1Content(idx);
+		vo = dao.getBoard1PastContent(idx);
 		
 		request.setAttribute("vo", vo);
 		

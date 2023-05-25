@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/member/memberJoin.jsp" />
 <style>
 	nav {
-		background-color: rgba( 255, 255, 255, 0.9 )
+		background-color: rgba(255, 255, 255, 0.9);
 	}
 	
 </style>
@@ -24,22 +24,46 @@
 	}
 </script>
 <nav class="navbar navbar-expand-sm sticky-top">
-	<a class="navbar-brand" href="http://localhost:9090/javaweb18J/">Hello World</a>
+	<a class="navbar-brand" href="http://localhost:9090/javaweb18J/Main"><img src="./images/globe-1348777_640.png" style="width: 50px;"> Hello World</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath}/BoardList.bo">주제선정</a>
+				<a class="nav-link" href="${ctp}/BoardList.bo">주제선정</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath}/Board1Content.tsb">오늘의주제</a>
+				<a class="nav-link" href="${ctp}/Board1Content.tsb">오늘의주제</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath}/BoardContent1.bo">지난주제</a>
+				<a class="nav-link" href="${ctp}/Board1List.tsb">지난주제</a>
 			</li>
 			<c:if test="${sLevel <= 100}">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+			<a class="memImg" href="${ctp}/MemberMain.mem"><img src="${ctp}/images/member/${image}" width="50px" /></a>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 				<li>
 					<div class="dropdown">
 						<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">MyPage</button>

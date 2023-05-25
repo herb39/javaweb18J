@@ -8,9 +8,8 @@ public class MemberVO {
 	private String name;
 	private String email;
 	private String image;
-	private int good;
-	private int reportCnt;
 	private String userDel;
+	private int point;
 	private int level;
 	private String salt;
 	
@@ -57,17 +56,11 @@ public class MemberVO {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public int getGood() {
-		return good;
+	public int getPoint() {
+		return point;
 	}
-	public void setGood(int good) {
-		this.good = good;
-	}
-	public int getReportCnt() {
-		return reportCnt;
-	}
-	public void setReportCnt(int reportCnt) {
-		this.reportCnt = reportCnt;
+	public void setPoint(int point) {
+		this.point = point;
 	}
 	public String getUserDel() {
 		return userDel;
@@ -91,7 +84,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
-				+ ", email=" + email + ", image=" + image + ", good=" + good + ", reportCnt=" + reportCnt + ", userDel="
-				+ userDel + ", level=" + level + ", salt=" + salt + "]";
+				+ ", email=" + email + ", image=" + image + ", point=" + point + ", userDel=" + userDel + ", level="
+				+ level + ", salt=" + salt + "]";
 	}
 }

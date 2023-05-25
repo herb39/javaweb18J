@@ -12,7 +12,7 @@ public class MemberUpdateOkCommand implements MemberInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 프로필 사진 업로드 되었는지 ?
-		String photo = "noimage.jpg";
+		String image = "noimage.jpg";
 		
 		HttpSession session = request.getSession();
 		String mid = (String) session.getAttribute("sMid");
@@ -20,25 +20,8 @@ public class MemberUpdateOkCommand implements MemberInterface {
 		
 		String nickName = request.getParameter("nickName") == null ? "" : request.getParameter("nickName");		
 		String name = request.getParameter("name") == null ? "" : request.getParameter("name");
-		String gender = request.getParameter("gender") == null ? "" : request.getParameter("gender");
-		String birthday = request.getParameter("birthday") == null ? "" : request.getParameter("birthday");
-		String tel = request.getParameter("tel") == null ? "" : request.getParameter("tel");
-		String address = request.getParameter("address") == null ? "" : request.getParameter("address");
 		String email = request.getParameter("email") == null ? "" : request.getParameter("email");
-		String homePage = request.getParameter("homePage") == null ? "" : request.getParameter("homePage");
-		String job = request.getParameter("job") == null ? "" : request.getParameter("job");
-		String content = request.getParameter("content") == null ? "" : request.getParameter("content");
-		String userInfor = request.getParameter("userInfor") == null ? "" : request.getParameter("userInfor");
 		
-		// 취미 : 배열로 처리
-		String[] hobbys = request.getParameterValues("hobby");
-		String hobby = "";
-		if (hobbys.length != 0) {
-			for (String strHobby : hobbys) {
-				hobby += strHobby + "/";
-			}
-		}
-		hobby = hobby.substring(0, hobby.lastIndexOf("/"));
 		
 		// BackEnd check : DB에 저장되는 자료의 Null값, 길이, 중복여부 체크
 		// 아이디, 닉네임 중복 체크
@@ -58,13 +41,8 @@ public class MemberUpdateOkCommand implements MemberInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setName(name);
-		vo.setGender(gender);
-		vo.setBirthday(birthday);
-		vo.setTel(tel);
-		vo.setAddress(address);
 		vo.setEmail(email);
-		vo.setPhoto(photo);
-		vo.setUserInfor(userInfor);
+		vo.setImage(image);
 		
 		int res = dao.setMemberUpdateOk(vo);
 		

@@ -17,7 +17,7 @@ public class SayingContentCommand implements SayingInterface{
 		
 		SayingDAO dao = new SayingDAO();
 		
-		SayingVO vo = dao.getRandomSayingContent(idx);
+		SayingVO vo = dao.getRandomSayingContent();
 		
 		request.setAttribute("vo", vo);
 		request.setAttribute("image", image);

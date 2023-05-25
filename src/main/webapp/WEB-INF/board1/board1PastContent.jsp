@@ -12,7 +12,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>board1Content.jsp</title>
+	<title>board1PastContent.jsp</title>
 	<jsp:include page="/include/bs4.jsp" />
 	<style>
 		th {
@@ -31,67 +31,6 @@
 		}
 	
 	</style>
-	<script>
-		'use strict';
-		
-		// 댓글쓰기 (aJax)
-		function replyCheck() {
-			let content = $("#content").val();
-			if (content.trim() == "") {
-				alert("댓글을 입력하세요.");
-				$("#content").focus();
-				return false;
-			}
-			let query = {
-					boardIdx	: ${vo.idx},
-					mid			: '${sMid}',
-					nickName	: '${sNickName}',
-					content		: content,
-					hostIp		: '${pageContext.request.remoteAddr}',
-			}
-			
-			$.ajax({
-				type	: "post",
-				url		: "${ctp}/Board1ReplyInput.tsb",
-				data	: query,
-				success	: function(res) {
-					if (res == "1") {
-						alert("댓글 작성 완료");
-						location.reload();
-					} else {
-						alert("댓글 작성 실패");
-					}
-				},
-				error	: function() {
-					alert("전송 오류");
-				}
-				
-			});
-		}
-		
-		// 댓글삭제 (aJax)
-		/* function replyDelete(replyIdx) {
-			let ans = confirm("댓글을 삭제하시겠습니까?");
-			if (!ans) return false;
-			
-			$.ajax({
-				type	:"post",
-				url		:"${ctp}/BoardReplyDelete.bo",
-				data	:{replyIdx: replyIdx},
-				success	:function(res) {
-					if (res == "1"){
-						alert("댓글 삭제 완료");
-						location.reload();
-					} else {
-						alert("댓글 삭제 실패");
-					}
-				},
-				error	:function() {
-					alert("전송 오류");
-				}
-			});
-		} */
-	</script>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
@@ -116,10 +55,6 @@
 			</tr>
 		</table>
 		
-		<!-- 비회원 댓글 작성 제한 -->
-		<c:if test="${level > 100}">
-			<div style="text-align:center;"><b>댓글을 작성하려면 <a type="text" data-toggle="modal" data-target="#loginModal" style="cursor:pointer; color:blue;">로그인</a>하세요!</b></div><br />
-		</c:if>
 		
 		<!-- 댓글 리스트 -->
 		<div class="container">
@@ -142,25 +77,6 @@
 				</c:forEach>
 			</table>
 		</div>
-		
-		<c:if test="${level <= 100}">
-			<!-- 댓글 입력 -->
-			<form name="replyForm">
-				<table class="table table-center">
-					<tr>
-						<td style="width: 85%" class="text-left">
-							내용
-							<textarea rows="4" name="content" id="content" class="form-control"></textarea>
-						</td>
-						<td style="width: 15%">
-							<br />
-							<p>작성자 ${sNickName}</p>
-							<input type="button" value="댓글쓰기" onclick="replyCheck()" class="btn btn-info btn-sm" />
-						</td>
-					</tr>
-				</table>
-			</form>
-		</c:if>
 		
 	</div>
 	<p><br /></p>

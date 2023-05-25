@@ -22,31 +22,38 @@ public class SayingDAO {
 	
 	
 	// Saying 1건 가져오기 (랜덤 idx)
-	public SayingVO getRandomSayingContent(int idx) {
-        SayingVO vo = new SayingVO();
-        try {
-            sql = "select * from saying where idx = ?";
-            pstmt = conn.prepareStatement(sql);
+	public SayingVO getRandomSayingContent() {
+	    SayingVO vo = new SayingVO();
+	    try {
+	        sql = "SELECT COUNT(*) AS totalRows FROM saying";
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
 
-            // 랜덤한 int 값을 생성하여 idx에 할당
-            Random random = new Random();
-            int totalRows = 0;
-            if (rs.next()) totalRows = rs.getInt("totalRows");
-            int randomIdx = random.nextInt(totalRows) + 1;
-            pstmt.setInt(1, randomIdx);
-            rs = pstmt.executeQuery();
-            rs.next();
+	        int totalRows = 0;
+	        if (rs.next()) {
+	            totalRows = rs.getInt("totalRows");
+	        }
 
+	        Random random = new Random();
+	        int randomIdx = random.nextInt(totalRows) + 1;
 
-            vo.setIdx(rs.getInt("idx"));
-            vo.setImage(rs.getString("image"));
-            vo.setContent(rs.getString("content"));
-            vo.setName(rs.getString("name"));
-        } catch (SQLException e) {
-            System.out.println("SQL 오류: " + e.getMessage());
-        } finally {
-            getConn.rsClose();
-        }
-        return vo;
-    }
+	        sql = "SELECT * FROM saying WHERE idx = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, randomIdx);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            vo.setIdx(rs.getInt("idx"));
+	            vo.setImage(rs.getString("image"));
+	            vo.setContent(rs.getString("content"));
+	            vo.setName(rs.getString("name"));
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류: " + e.getMessage());
+	    } finally {
+	        getConn.rsClose();
+	    }
+	    return vo;
+	}
+
 }
