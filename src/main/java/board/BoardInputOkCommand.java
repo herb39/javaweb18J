@@ -12,11 +12,9 @@ public class BoardInputOkCommand implements BoardInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-//		int idx = session.getAttribute("sIdx") == null ? 0 : (int) session.getAttribute("sIdx");
 		int idx = (int) session.getAttribute("sIdx");
 		String mid = session.getAttribute("sMid") == null ? "" : (String) session.getAttribute("sMid");
 		String nickName = session.getAttribute("sNickName") == null ? "" : (String) session.getAttribute("sNickName");
-//		int level = session.getAttribute("sLevel") == null ? 101 : (int) session.getAttribute("sLevel");
 		
 		String title = request.getParameter("title") == null ? "" : request.getParameter("title");
 		String content = request.getParameter("content") == null ? "" : request.getParameter("content");
@@ -25,7 +23,6 @@ public class BoardInputOkCommand implements BoardInterface {
 		vo.setMemberIdx(idx);
 		vo.setMid(mid);
 		vo.setNickName(nickName);
-//		vo.setLevel(level);
 		
 		vo.setTitle(title);
 		vo.setContent(content);

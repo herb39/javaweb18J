@@ -24,7 +24,7 @@
 	}
 </script>
 <nav class="navbar navbar-expand-sm sticky-top">
-	<a class="navbar-brand" href="http://localhost:9090/javaweb18J/Main"><img src="./images/globe-1348777_640.png" style="width: 50px;"> <b>Hello World</b></a>
+	<a class="navbar-brand" href="${ctp}/Main"><img src="./images/globe-1348777_640.png" style="width: 50px;"> <b>Hello World</b></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 		<span class="navbar-toggler-icon"></span>
 	</button>

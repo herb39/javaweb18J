@@ -2,7 +2,6 @@
 <style>
 	#demo {
 		font-size: 30px;
-		/* color: magenta; */
 	}
 </style>
 <!-- 특정 요소에 카운트다운 타이머 표시 -->

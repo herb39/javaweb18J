@@ -63,7 +63,7 @@
 	<jsp:include page="/include/header.jsp" />
 	<p><br /></p>
 	<div class="container">
-		<h2 class="text-center">주제선정 게시판</h2>
+		<h2 class="text-center">주 제 선 정&nbsp;&nbsp; 게 시 판</h2>
 		<table class="table table-borderless">
 			<tr>
 				<td>

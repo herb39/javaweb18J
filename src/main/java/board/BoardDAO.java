@@ -24,12 +24,6 @@ public class BoardDAO {
 	public ArrayList<BoardVO> getBoardList(int startIndexNo, int pageSize) {
 		ArrayList<BoardVO> vos = new ArrayList<>();
 		try {
-//			sql = "select * from board order by idx desc limit ?,?";
-//			sql = "select *, datediff(wDate, now()) as day_diff,timestampdiff(hour, wDate, now()) as hour_diff from"
-//					+ " board where date_format(wDate, '%Y-%m-%d') = curdate() order by idx desc limit ?,?";
-//			sql = "select *, datediff(wDate, now()) as day_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-//					+ "(select count(*) from boardReply where boardIdx = b.idx) replyCount "
-//					+ "from board b order by idx desc limit ?,?";
 			sql = "SELECT b.*, m.level, "
 					+ "DATEDIFF(b.wDate, NOW()) AS day_diff, "
 					+ "TIMESTAMPDIFF(HOUR, b.wDate, NOW()) AS hour_diff "
@@ -56,8 +50,6 @@ public class BoardDAO {
 				vo.setGood(rs.getInt("good"));
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setDay_diff(rs.getInt("day_diff"));
-				
-//				vo.setReplyCount(rs.getInt("replyCount"));
 				
 				vos.add(vo);
 			}
@@ -163,20 +155,6 @@ public class BoardDAO {
 		}		
 	}
 	
-//	public void setGoodPlusMinus(int idx, int goodCnt) {
-//		try {
-//			sql = "update board set good = (good + ?) where idx = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, goodCnt);
-//			pstmt.setInt(2, idx);
-//			pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 b7 : " + e.getMessage());
-//		} finally {
-//			getConn.pstmtClose();
-//		}	
-//	}
-
 	// 이전글 / 다음글 ?
 	public BoardVO getPreNextSearch(int idx, String str) {
 		vo = new BoardVO();
@@ -270,74 +248,6 @@ public class BoardDAO {
 		return res;
 	}
 
-//	// 댓글 작성
-//	public String setReplyInputOk(BoardReplyVO replyVo) {
-//		String res = "0";
-//		try {
-//			sql = "insert into boardReply values (default,?,?,?,default,?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, replyVo.getBoardIdx());
-//			pstmt.setString(2, replyVo.getMid());
-//			pstmt.setString(3, replyVo.getNickName());
-//			pstmt.setString(4, replyVo.getHostIp());
-//			pstmt.setString(5, replyVo.getContent());
-//			pstmt.executeUpdate();
-//			res = "1";
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			getConn.pstmtClose();
-//		}
-//		return res;
-//	}
-
-//	// 본게시글에 있는 댓글 가져오기
-//	public ArrayList<BoardReplyVO> getBoardReply(int idx) {
-//		ArrayList<BoardReplyVO> replyVos = new ArrayList<>();
-//		try {
-//			sql = "select * from boardReply where boardIdx = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, idx);
-//			rs = pstmt.executeQuery();
-//			
-//			while (rs.next()) {
-//				BoardReplyVO replyVo = new BoardReplyVO();
-//				replyVo.setIdx(rs.getInt("idx"));
-//				replyVo.setBoardIdx(idx);
-//				replyVo.setMid(rs.getString("mid"));
-//				replyVo.setNickName(rs.getString("nickName"));
-//				replyVo.setwDate(rs.getString("wDate"));
-//				replyVo.setHostIp(rs.getString("hostIp"));
-//				replyVo.setContent(rs.getString("content"));
-//				
-//				replyVos.add(replyVo);
-//				
-//			}
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			getConn.rsClose();
-//		}
-//		return replyVos;
-//	}
-	
-//	// 댓글 삭제
-//	public String setBoardReplyDeleteOk(int replyIdx) {
-//		String res = "0";
-//		try {
-//			sql = "delete from boardReply where idx = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, replyIdx);
-//			pstmt.executeUpdate();
-//			res = "1";
-//		} catch (SQLException e) {
-//			System.out.println("SQL 오류 : " + e.getMessage());
-//		} finally {
-//			getConn.pstmtClose();
-//		}
-//		return res;
-//	}
-
 	// 사용자가 쓴 게시글 전체 건수 ?
 	public int getTotRecCntMember(String mid) {
 		int totRecCnt = 0;
@@ -416,35 +326,6 @@ public class BoardDAO {
         }
         return res;
 	}
-	
-//	// board 테이블의 좋아요가 가장 많은 게시글을 board1 테이블에 추가
-//	public void setBoard1Input() {
-//	    try {
-//	        // good 값이 가장 높은 레코드 조회
-//	        sql = "SELECT * FROM board ORDER BY good DESC LIMIT 1";
-//	        pstmt = conn.prepareStatement(sql);
-//	        rs = pstmt.executeQuery();
-//
-//	        if (rs.next()) {
-//	            // 조회된 레코드 값을 가져와서 board1 테이블에 추가
-//	            sql = "INSERT INTO board1 (col1, col2, col3, ...) VALUES (?, ?, ?, ...)";
-//	            pstmt = conn.prepareStatement(sql);
-//
-//	            // 조회된 레코드의 컬럼 값 설정
-//	            pstmt.setString(1, rs.getString("col1"));
-//	            pstmt.setInt(2, rs.getInt("col2"));
-//	            pstmt.setString(3, rs.getString("col3"));
-//
-//	            // board1 테이블에 레코드 추가
-//	            pstmt.executeUpdate();
-//	        }
-//	    } catch (SQLException e) {
-//	        System.out.println("SQL 오류: " + e.getMessage());
-//	    } finally {
-//	        getConn.rsClose();
-//	    }
-//	}
-
 	
 	
 }

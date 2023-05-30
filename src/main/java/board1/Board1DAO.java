@@ -20,15 +20,16 @@ public class Board1DAO {
 	
 	Board1VO vo = null;
 	
-	// 오늘의 주제 추가
 	public Board1VO setBoard1Content(int idx) {
-		vo = new Board1VO();
+	    Board1VO vo = new Board1VO();
 	    try {
 	        // 어제 날짜를 가져옴
 	        LocalDate yesterday = LocalDate.now().minusDays(1);
 
 	        // 어제 날짜 중에서 좋아요가 가장 많은 글 조회
-	        sql = "SELECT b.*, m.level FROM board1 b JOIN member m ON b.memberIdx = m.idx board WHERE DATE(wDate) = ? ORDER BY good DESC LIMIT 1";
+	        sql = "SELECT b.*, m.level "
+	            + "FROM board1 b JOIN member m ON b.memberIdx = m.idx "
+	            + "WHERE DATE(wDate) = ? ORDER BY good DESC LIMIT 1";
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setDate(1, Date.valueOf(yesterday));
 	        rs = pstmt.executeQuery();
@@ -37,11 +38,10 @@ public class Board1DAO {
 	            // 조회된 레코드의 idx 값을 가져옴
 	            int boardIdx = rs.getInt("idx");
 
-	            // 조회된 레코드의 정보를 board1 테이블에 추가
+	            // board1 테이블에 추가할 레코드의 값 설정
 	            sql = "INSERT INTO board1 VALUES (default,?,?,?,?,?,?,?)";
 	            pstmt = conn.prepareStatement(sql);
 
-	            // board1 테이블에 추가할 레코드의 값 설정
 	            pstmt.setInt(1, boardIdx);
 	            pstmt.setString(2, rs.getString("mid"));
 	            pstmt.setString(3, rs.getString("nickName"));
@@ -49,11 +49,9 @@ public class Board1DAO {
 	            pstmt.setString(5, rs.getString("content"));
 	            pstmt.setString(6, rs.getString("wDate"));
 	            pstmt.setInt(7, rs.getInt("memberIdx"));
-	            // board1 테이블에 레코드 추가
 	            pstmt.executeUpdate();
-	            
-	            // Board1VO 객체 생성 및 값 설정
-	            vo = new Board1VO();
+
+	            // 값 설정
 	            vo.setBoardIdx(boardIdx);
 	            vo.setMid(rs.getString("mid"));
 	            vo.setNickName(rs.getString("nickName"));
@@ -70,36 +68,6 @@ public class Board1DAO {
 	    return vo;
 	}
 
-//	// 오늘의 주제 조회
-//	public Board1VO getBoard1Content(int idx) {
-//	    Board1VO vo = null;
-//	    try {
-//	        // 어제 날짜를 가져옴
-//	        LocalDate yesterday = LocalDate.now().minusDays(1);
-//
-//	        // 어제 날짜 데이터 가져오기
-//	        sql = "SELECT * FROM board1 WHERE DATE(wDate) = ?";
-//	        pstmt = conn.prepareStatement(sql);
-//	        pstmt.setDate(1, Date.valueOf(yesterday));
-//	        rs = pstmt.executeQuery();
-//	        if (rs.next()) {
-//	            vo = new Board1VO();
-//	            vo.setBoardIdx(rs.getInt("boardIdx"));
-//	            vo.setMid(rs.getString("mid"));
-//	            vo.setNickName(rs.getString("nickName"));
-//	            vo.setTitle(rs.getString("title"));
-//	            vo.setContent(rs.getString("content"));
-//	            vo.setwDate(rs.getString("wDate"));
-//	        } else {
-//	        	return setBoard1Content(idx);
-//	        }
-//	    } catch (SQLException e) {
-//	        System.out.println("SQL 오류: " + e.getMessage());
-//	    } finally {
-//	        getConn.rsClose();
-//	    }
-//	    return vo;
-//	}
 
 	// 게시글 1건 가져오기
 	public Board1VO getBoard1Content(int idx) {
@@ -178,11 +146,6 @@ public class Board1DAO {
 				sql = "SELECT b.*, m.level FROM board1 b "
 						+ "JOIN member m ON b.memberIdx = m.idx "
 						+ "order by idx desc limit ?,?";
-//				sql = "select *, datediff(wDate, now()) as day_diff,timestampdiff(hour, wDate, now()) as hour_diff from"
-//						+ " board1 where date_format(wDate, '%Y-%m-%d') = curdate() order by idx desc limit ?,?";
-//				sql = "select *, datediff(wDate, now()) as day_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-//						+ "(select count(*) from boardReply where boardIdx = b.idx) replyCount "
-//						+ "from board b order by idx desc limit ?,?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, startIndexNo);
 				pstmt.setInt(2, pageSize);
@@ -197,11 +160,6 @@ public class Board1DAO {
 					vo.setContent(rs.getString("content"));
 					vo.setwDate(rs.getString("wDate"));
 					vo.setLevel(rs.getInt("level"));
-					
-//					vo.setHour_diff(rs.getInt("hour_diff"));
-//					vo.setDay_diff(rs.getInt("day_diff"));
-					
-//					vo.setReplyCount(rs.getInt("replyCount"));
 					
 					vos.add(vo);
 				}

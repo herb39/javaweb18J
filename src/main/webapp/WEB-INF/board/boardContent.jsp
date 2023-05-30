@@ -90,8 +90,8 @@
 						<input type="button" value="돌아가기" onclick="location.href='${ctp}/BoardSearch.bo?search=${search}&searchString=${searchString}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-primary" />
 					</c:if>
 					<c:if test="${flag != 'search'}">
-						<input type="button" value="목록으로" onclick="location.href='${ctp}/BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-primary" /> &nbsp;
-						<c:if test="${sMid == vo.mid || sLevel == 0 || sLevel == 100}">
+						<input type="button" value="목록으로" onclick="location.href='${ctp}/BoardList.bo';" class="btn btn-primary" /> &nbsp;
+						<c:if test="${sLevel == 0 || sLevel == 100}">
 							<input type="button" value="수정" onclick="location.href='${ctp}/BoardUpdate.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" /> &nbsp;
 							<input type="button" value="삭제" onclick="boardDelete()" class="btn btn-danger" />
 						</c:if>

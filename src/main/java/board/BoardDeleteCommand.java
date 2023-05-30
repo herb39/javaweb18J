@@ -19,12 +19,9 @@ public class BoardDeleteCommand implements BoardInterface {
 		int sLevel = (int)session.getAttribute("sLevel");
 		String nickName = request.getParameter("nickName") == null ? "" : request.getParameter("nickName");
 
-		if (sLevel != 0) {
-			if (!sNickName.equals(nickName)) {
+		if (sLevel != 0 || sLevel != 100) {
 				request.setAttribute("msg", "잘못된 접근입니다.");
 				request.setAttribute("url", request.getContextPath()+ "/");
-				return;
-			}
 		}
 		
 		// 정상 처리
@@ -34,13 +31,6 @@ public class BoardDeleteCommand implements BoardInterface {
 		
 		BoardDAO dao = new BoardDAO();
 		
-		// 현재 게시글에 댓글이 있는지 확인 후 삭제 처리
-//		ArrayList<BoardReplyVO> vos= dao.getBoardReply(idx);
-//		if (vos.size() != 0) {
-//			request.setAttribute("msg", "현재 게시글에 댓글이 존재합니다. \\n댓글을 먼저 삭제해주세요.");
-//			request.setAttribute("url", request.getContextPath()+"/BoardContent.bo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
-//			return;
-//		}
 		
 		// 현재 게시글에 댓글이 없다면 삭제 처리
 		int res = dao.setBoardDelete(idx);

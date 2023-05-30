@@ -121,7 +121,7 @@
 									</c:forEach>
 								
 								
-								<option value="3/${vo.idx}" ${vo.level==100 ? "selected" : ""}>운영자</option>
+								<option value="100/${vo.idx}" ${vo.level==100 ? "selected" : ""}>운영자</option>
 							</select>
 						</form>
 					</td>

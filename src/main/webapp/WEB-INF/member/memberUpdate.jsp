@@ -56,12 +56,7 @@
 			if (nickName == '${sNickName}'){
 				nickNameCheckSw = 1;
 			}
-			if (nickNameCheckSw == 0) {
-				alert("닉네임 중복확인 버튼을 누르세요.");
-				document.getElementById("nickNameBtn").focus();
-			} else {
-				myform.email.value = email;
-				
+			else {
 				myform.submit();		
 			}
 		} else {

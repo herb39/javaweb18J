@@ -22,5 +22,5 @@
   <i class="fa fa-twitter w3-hover-opacity"></i>
   <i class="fa fa-linkedin w3-hover-opacity"></i>
   <br />
-  <p class="w3-medium mb-0">Copyright 2023. 05. 15. Design By IMDD</p>
+  <p class="w3-medium mb-0">Copyright 2023. 05. 23. Design By IMDD</p>
 </footer>

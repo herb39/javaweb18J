@@ -63,7 +63,7 @@
 	<jsp:include page="/include/header.jsp" />
 	<p><br /></p>
 	<div class="container">
-		<h2 class="text-center">토 론 게 시 판</h2>
+		<h2 class="text-center">토 론 &nbsp;&nbsp;게 시 판</h2>
 		<table class="table table-borderless">
 			<tr>
 				<td class="text-right">
