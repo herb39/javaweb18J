@@ -1,4 +1,4 @@
--- 오늘 주제 테이블
+ 오늘 주제 테이블
 create table board1 (
 	idx   	int not null auto_increment,	/* 게시글의 고유번호 */
 	boardIdx int not null,				-- 원본글 고유번호(외래키로 지정)
@@ -15,7 +15,57 @@ create table board1 (
 	on delete restrict
 );
 
-alter table board1 add level int not null; 
+
+CREATE TABLE `board1` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `boardIdx` int NOT NULL,
+  `mid` varchar(20) NOT NULL,
+  `nickName` varchar(20) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `wDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  memberIdx int not null,
+  PRIMARY KEY (`idx`),
+  foreign key(memberIdx) references member(idx)    /* 외래키 설정: 반드시 고유한 키여야만 한다. */
+	on update cascade															 /* 원본의 변경을 따라간다. */
+	on delete cascade
+);
+
+
+
+CREATE TABLE board1 (
+  idx int NOT NULL AUTO_INCREMENT,
+  boardIdx int NOT NULL,
+  mid varchar(20) NOT NULL,
+  nickName varchar(20) NOT NULL,
+  title varchar(100) NOT NULL,
+  content text NOT NULL,
+  wDate datetime DEFAULT CURRENT_TIMESTAMP,
+  memberIdx int NOT NULL,
+  PRIMARY KEY (idx),
+  KEY memberIdx (memberIdx),
+  KEY boardIdx (boardIdx),
+  CONSTRAINT fk_memberIdx FOREIGN KEY (memberIdx) REFERENCES member (idx) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_boardIdx FOREIGN KEY (boardIdx) REFERENCES board (idx) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE `board1Reply` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `board1Idx` int NOT NULL,
+  `mid` varchar(20) NOT NULL,
+  `nickName` varchar(20) NOT NULL,
+  `content` text NOT NULL,
+  `good` int DEFAULT '0',
+  `wDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `oX` varchar(10) NOT NULL DEFAULT 'X',
+  `memberIdx` int NOT NULL,
+  PRIMARY KEY (`idx`),
+  KEY `memberIdx` (`memberIdx`),
+  CONSTRAINT `board1reply_ibfk_1` FOREIGN KEY (`memberIdx`) REFERENCES `member` (`idx`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_board1Idx FOREIGN KEY (board1Idx) REFERENCES board1 (idx) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 drop table board1;
 drop table board1Reply;
@@ -37,3 +87,18 @@ create table board1Reply (
 	on delete restrict
 );
 
+CREATE TABLE `board1Reply` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `board1Idx` int NOT NULL,
+  `mid` varchar(20) NOT NULL,
+  `nickName` varchar(20) NOT NULL,
+  `content` text NOT NULL,
+  `good` int DEFAULT '0',
+  `wDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `oX` varchar(10) NOT NULL DEFAULT 'X',
+  memberIdx int not null,
+  PRIMARY KEY (`idx`),
+  foreign key(memberIdx) references member(idx)    /* 외래키 설정: 반드시 고유한 키여야만 한다. */
+	on update cascade															 /* 원본의 변경을 따라간다. */
+	on delete cascade
+);

@@ -6,12 +6,13 @@ public class Board1ReplyVO {
 	private String mid;
 	private String nickName;
 	private String content;
-	private String hostIp;
 	private int good;
 	private String wDate;
 	private String oX;
+	private int memberIdx;
 	
-	
+	private int level;
+
 	public int getIdx() {
 		return idx;
 	}
@@ -42,12 +43,6 @@ public class Board1ReplyVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getHostIp() {
-		return hostIp;
-	}
-	public void setHostIp(String hostIp) {
-		this.hostIp = hostIp;
-	}
 	public int getGood() {
 		return good;
 	}
@@ -66,11 +61,23 @@ public class Board1ReplyVO {
 	public void setoX(String oX) {
 		this.oX = oX;
 	}
-
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
+	
 	@Override
 	public String toString() {
 		return "Board1ReplyVO [idx=" + idx + ", board1Idx=" + board1Idx + ", mid=" + mid + ", nickName=" + nickName
-				+ ", content=" + content + ", hostIp=" + hostIp + ", good=" + good + ", wDate=" + wDate + ", oX=" + oX
-				+ "]";
+				+ ", content=" + content + ", good=" + good + ", wDate=" + wDate + ", oX=" + oX + ", memberIdx="
+				+ memberIdx + ", level=" + level + "]";
 	}
 }

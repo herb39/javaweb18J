@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
 	.snm {
 		text-align: right;
 	}
-	.fakeimg {
+	.sImg {
 		width: 100%;
 		background: #aaa;
 	}
@@ -50,40 +51,52 @@
 			<div class="col-sm-3">
 				<!-- 명언 -->
 				<h3>오늘의 명언</h3>
-				<img class="fakeimg" alt="asd" src="${vo.image}">
+				<img class="sImg" alt="asd" src="${sayingVo.image}">
 				<br /><br />
-				<p>${vo.content}</p>
-				<p class="snm">${vo.name}</p>
+				<p>${sayingVo.content}</p>
+				<p class="snm">${sayingVo.name}</p>
 				<hr class="d-sm-none">
 			</div>
 			<!-- 주제선정 -->
 			<div class="col-sm-9">
-				<h2>오늘의 주제</h2>
-				<h5>미리보기 들어갈 자리</h5>
-				<div class="fakeimg">Fake Image</div>
-				<p>Some text..</p>
-				<p>Sunt in culpa nostrud exercitation ullamco.</p>
-				<br>
+				
 				<h2>주제 선정 게시판</h2>
-				<h5>Title description, Sep 2, 2017</h5>
-				<div class="fakeimg">Fake Image</div>
-				<p>Some text..</p>
-				<p>Sunt in culpa exercitation ullamco.</p>
+				
+				<c:forEach var="boardVo" items="${boardVos}" varStatus="st">
+					<c:if test="${boardVo.day_diff == 0}">
+						<table class="table table-hover text-center m-0">
+						<tr>
+							<td class="text-left">
+								<a href="${ctp}/BoardContent.bo?idx=${boardVo.idx}">${boardVo.title}</a>
+							</td>
+							<td class="col-3 text-left">
+								<span class="badge badge-pill badge-secondary">LV.${boardVo.level}</span> ${boardVo.nickName}
+							</td>
+							<td class="col-2">${fn:substring(boardVo.wDate,11,16)}</td>
+							<td class="col-1">❤ ️${boardVo.good}</td>
+						</tr>
+						</table>
+					</c:if>
+				</c:forEach>
+				<br />
+				<h2>토론 게시판</h2>
+				<c:forEach var="board1Vo" items="${board1Vos}" varStatus="st">
+					<c:if test="${board1Vo.day_diff == 0}">
+						<table class="table table-hover text-center m-0">
+						<tr>
+							<td class="text-left">
+								<a href="${ctp}/Board1Content.tsb?idx=${board1Vo.idx}">${board1Vo.title}</a>
+							</td>
+							<td class="col-3">
+								<span class="badge badge-pill badge-secondary">LV.${board1Vo.level}</span> ${board1Vo.nickName}
+							</td>
+							<td class="col-2">${fn:substring(board1Vo.wDate,0,10)}</td>
+						</tr>
+						</table>
+					</c:if>
+				</c:forEach>
+				
 			</div>
-			<!-- 메인게시판 -->
-			<!-- <div class="col-sm-4">
-				<h2>TITLE HEADING</h2>
-				<h5>Title description, Dec 7, 2017</h5>
-				<div class="fakeimg">Fake Image</div>
-				<p>Some text..</p>
-				<p>Sunt in culpa nostrud exercitation ullamco.</p>
-				<br>
-				<h2>TITLE HEADING</h2>
-				<h5>Title description, Sep 2, 2017</h5>
-				<div class="fakeimg">Fake Image</div>
-				<p>Some text..</p>
-				<p>Sunt in culpa exercitation ullamco.</p>
-			</div> -->
 		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />

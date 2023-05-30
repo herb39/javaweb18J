@@ -46,7 +46,7 @@
       <tr>
         <th>작성자</th>
         <td>
-        	<span class="badge badge-pill badge-secondary">LV.${sLevel}</span>${sNickName}
+        	<span class="badge badge-pill badge-secondary">LV.${sLevel}</span> ${sNickName}
         </td>
       </tr>
       <tr>
@@ -60,7 +60,6 @@
       <tr>
         <td colspan="2" class="text-center">
         	<input type="button" value="등록" onclick="inputBoard()" class="btn btn-secondary" />
-          <input type="reset" value="다시입력" class="btn btn-secondary"/>
           <input type="button" value="돌아가기" onclick="location.href='${ctp}/BoardList.bo';" class="btn btn-secondary"/>
         </td>
       </tr>

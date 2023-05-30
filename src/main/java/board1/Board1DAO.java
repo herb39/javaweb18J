@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import board.BoardVO;
 import conn.GetConn;
 
 public class Board1DAO {
@@ -29,7 +28,7 @@ public class Board1DAO {
 	        LocalDate yesterday = LocalDate.now().minusDays(1);
 
 	        // 어제 날짜 중에서 좋아요가 가장 많은 글 조회
-	        sql = "SELECT * FROM board WHERE DATE(wDate) = ? ORDER BY good DESC LIMIT 1";
+	        sql = "SELECT b.*, m.level FROM board1 b JOIN member m ON b.memberIdx = m.idx board WHERE DATE(wDate) = ? ORDER BY good DESC LIMIT 1";
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setDate(1, Date.valueOf(yesterday));
 	        rs = pstmt.executeQuery();
@@ -39,7 +38,7 @@ public class Board1DAO {
 	            int boardIdx = rs.getInt("idx");
 
 	            // 조회된 레코드의 정보를 board1 테이블에 추가
-	            sql = "INSERT INTO board1 (boardIdx, mid, nickName, title, content, hostIp, wDate, level) VALUES (?,?,?,?,?,?,?,?)";
+	            sql = "INSERT INTO board1 VALUES (default,?,?,?,?,?,?,?)";
 	            pstmt = conn.prepareStatement(sql);
 
 	            // board1 테이블에 추가할 레코드의 값 설정
@@ -48,9 +47,8 @@ public class Board1DAO {
 	            pstmt.setString(3, rs.getString("nickName"));
 	            pstmt.setString(4, rs.getString("title"));
 	            pstmt.setString(5, rs.getString("content"));
-	            pstmt.setString(6, rs.getString("hostIp"));
-	            pstmt.setString(7, rs.getString("wDate"));
-	            pstmt.setString(8, rs.getString("level"));
+	            pstmt.setString(6, rs.getString("wDate"));
+	            pstmt.setInt(7, rs.getInt("memberIdx"));
 	            // board1 테이블에 레코드 추가
 	            pstmt.executeUpdate();
 	            
@@ -61,7 +59,6 @@ public class Board1DAO {
 	            vo.setNickName(rs.getString("nickName"));
 	            vo.setTitle(rs.getString("title"));
 	            vo.setContent(rs.getString("content"));
-	            vo.setHostIp(rs.getString("hostIp"));
 	            vo.setwDate(rs.getString("wDate"));
 	            vo.setLevel(rs.getInt("level"));
 	        }
@@ -73,55 +70,53 @@ public class Board1DAO {
 	    return vo;
 	}
 
-	// 오늘의 주제 조회
-	public Board1VO getBoard1Content(int idx) {
-	    Board1VO vo = null;
-	    try {
-	        // 어제 날짜를 가져옴
-	        LocalDate yesterday = LocalDate.now().minusDays(1);
-
-	        // 어제 날짜 데이터 가져오기
-	        sql = "SELECT * FROM board1 WHERE DATE(wDate) = ?";
-	        pstmt = conn.prepareStatement(sql);
-	        pstmt.setDate(1, Date.valueOf(yesterday));
-	        rs = pstmt.executeQuery();
-	        if (rs.next()) {
-	            vo = new Board1VO();
-	            vo.setBoardIdx(rs.getInt("boardIdx"));
-	            vo.setMid(rs.getString("mid"));
-	            vo.setNickName(rs.getString("nickName"));
-	            vo.setTitle(rs.getString("title"));
-	            vo.setContent(rs.getString("content"));
-	            vo.setHostIp(rs.getString("hostIp"));
-	            vo.setwDate(rs.getString("wDate"));
-	            vo.setLevel(rs.getInt("level"));
-	        } else {
-	        	return setBoard1Content(idx);
-	        }
-	    } catch (SQLException e) {
-	        System.out.println("SQL 오류: " + e.getMessage());
-	    } finally {
-	        getConn.rsClose();
-	    }
-	    return vo;
-	}
+//	// 오늘의 주제 조회
+//	public Board1VO getBoard1Content(int idx) {
+//	    Board1VO vo = null;
+//	    try {
+//	        // 어제 날짜를 가져옴
+//	        LocalDate yesterday = LocalDate.now().minusDays(1);
+//
+//	        // 어제 날짜 데이터 가져오기
+//	        sql = "SELECT * FROM board1 WHERE DATE(wDate) = ?";
+//	        pstmt = conn.prepareStatement(sql);
+//	        pstmt.setDate(1, Date.valueOf(yesterday));
+//	        rs = pstmt.executeQuery();
+//	        if (rs.next()) {
+//	            vo = new Board1VO();
+//	            vo.setBoardIdx(rs.getInt("boardIdx"));
+//	            vo.setMid(rs.getString("mid"));
+//	            vo.setNickName(rs.getString("nickName"));
+//	            vo.setTitle(rs.getString("title"));
+//	            vo.setContent(rs.getString("content"));
+//	            vo.setwDate(rs.getString("wDate"));
+//	        } else {
+//	        	return setBoard1Content(idx);
+//	        }
+//	    } catch (SQLException e) {
+//	        System.out.println("SQL 오류: " + e.getMessage());
+//	    } finally {
+//	        getConn.rsClose();
+//	    }
+//	    return vo;
+//	}
 
 	// 게시글 1건 가져오기
-	public Board1VO getBoard1PastContent(int idx) {
+	public Board1VO getBoard1Content(int idx) {
 		Board1VO vo = new Board1VO();
 		try {
-			sql = "select * from board1 where idx = ?";
+			sql = "select b.*, m.level FROM board1 b JOIN member m ON b.memberIdx = m.idx where b.idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
 			rs.next();
 			
+			vo.setIdx(rs.getInt("idx"));
 			vo.setBoardIdx(rs.getInt("boardIdx"));
             vo.setMid(rs.getString("mid"));
             vo.setNickName(rs.getString("nickName"));
             vo.setTitle(rs.getString("title"));
             vo.setContent(rs.getString("content"));
-            vo.setHostIp(rs.getString("hostIp"));
             vo.setwDate(rs.getString("wDate"));
             vo.setLevel(rs.getInt("level"));
 		} catch (SQLException e) {
@@ -136,7 +131,7 @@ public class Board1DAO {
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
-			sql = "select count(idx) as cnt from board where date_format(wDate, '%Y-%m-%d') = curdate()";
+			sql = "select count(idx) as cnt from board1";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -162,12 +157,9 @@ public class Board1DAO {
 				vo = new Board1VO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
-				vo.setLevel(rs.getInt("Level"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString("content"));
-				vo.setImage(rs.getString("image"));
-				vo.setHostIp(rs.getString("hostIp"));
 				vo.setwDate(rs.getString("wDate"));
 				vos.add(vo);
 			}
@@ -183,7 +175,9 @@ public class Board1DAO {
 		public ArrayList<Board1VO> getBoard1List(int startIndexNo, int pageSize) {
 			ArrayList<Board1VO> vos = new ArrayList<>();
 			try {
-				sql = "select * from board1 order by idx desc limit ?,?";
+				sql = "SELECT b.*, m.level FROM board1 b "
+						+ "JOIN member m ON b.memberIdx = m.idx "
+						+ "order by idx desc limit ?,?";
 //				sql = "select *, datediff(wDate, now()) as day_diff,timestampdiff(hour, wDate, now()) as hour_diff from"
 //						+ " board1 where date_format(wDate, '%Y-%m-%d') = curdate() order by idx desc limit ?,?";
 //				sql = "select *, datediff(wDate, now()) as day_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
@@ -198,13 +192,11 @@ public class Board1DAO {
 					vo = new Board1VO();
 					vo.setIdx(rs.getInt("idx"));
 					vo.setMid(rs.getString("mid"));
-					vo.setLevel(rs.getInt("level"));
 					vo.setNickName(rs.getString("nickName"));
 					vo.setTitle(rs.getString("title"));
 					vo.setContent(rs.getString("content"));
-//					vo.setImage(rs.getString("image"));
-					vo.setHostIp(rs.getString("hostIp"));
 					vo.setwDate(rs.getString("wDate"));
+					vo.setLevel(rs.getInt("level"));
 					
 //					vo.setHour_diff(rs.getInt("hour_diff"));
 //					vo.setDay_diff(rs.getInt("day_diff"));
@@ -248,4 +240,90 @@ public class Board1DAO {
 			}
 			return vo;
 		}
+		
+		// 댓글 작성
+		public String setBoard1ReplyInput(Board1ReplyVO replyVo) {
+			String res = "0";
+			try {
+				sql = "insert into board1Reply values (default,?,?,?,?,default,default,default,?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, replyVo.getBoard1Idx());
+				pstmt.setString(2, replyVo.getMid());
+				pstmt.setString(3, replyVo.getNickName());
+				pstmt.setString(4, replyVo.getContent());
+				pstmt.setInt(5, replyVo.getMemberIdx());
+				pstmt.executeUpdate();
+				res = "1";
+			} catch (SQLException e) {
+				System.out.println("SQL 오류 / 댓글 작성 : " + e.getMessage());
+			} finally {
+				getConn.pstmtClose();
+			}
+			return res;
+		}
+		
+		// 본게시글에 있는 댓글 가져오기
+		public ArrayList<Board1ReplyVO> getBoard1Reply(int idx) {
+			ArrayList<Board1ReplyVO> replyVos = new ArrayList<>();
+			try {
+				sql = "select br.*, m.level from board1Reply br "
+						+ "join member m on br.memberIdx = m.idx "
+						+ "where board1Idx = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, idx);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					Board1ReplyVO replyVo = new Board1ReplyVO();
+					replyVo.setIdx(rs.getInt("idx"));
+					replyVo.setBoard1Idx(idx);
+					replyVo.setMid(rs.getString("mid"));
+					replyVo.setNickName(rs.getString("nickName"));
+					replyVo.setContent(rs.getString("content"));
+					replyVo.setGood(rs.getInt("br.good"));
+					replyVo.setwDate(rs.getString("wDate"));
+					replyVo.setoX(rs.getString("oX"));
+					replyVo.setLevel(rs.getInt("level"));
+					
+					replyVos.add(replyVo);
+				}
+			} catch (SQLException e) {
+				System.out.println("SQL 오류 (댓글 가져오기) : " + e.getMessage());
+			} finally {
+				getConn.rsClose();
+			}
+			return replyVos;
+		}
+
+	// 댓글 삭제
+	public String setBoard1ReplyDeleteOk(int replyIdx) {
+		String res = "0";
+		try {
+			sql = "delete from board1Reply where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyIdx);
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+	
+	// 좋아요 1 증가
+	public void setGoodUpdate(int replyIdx) {
+		try {
+			sql = "UPDATE board1Reply b JOIN member m ON b.memberIdx = m.idx SET b.good = b.good + 1, m.point = m.point + 20 WHERE b.idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyIdx);
+			System.out.println(replyIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 b6 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}		
+	}
 }

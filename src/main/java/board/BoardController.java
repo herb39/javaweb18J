@@ -57,11 +57,6 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
-		else if (com.equals("/BoardGoodPlusMinus")) {
-			command = new BoardGoodPlusMinusCommand();
-			command.execute(request, response);
-			return;
-		}
 		else if (com.equals("/BoardSearch")) {
 			command = new BoardSearchCommand();
 			command.execute(request, response);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -44,63 +45,6 @@
 			if (ans) location.href="${ctp}/BoardDelete.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&nickName=${vo.nickName}";
 		}
 		
-		/* // 댓글쓰기 (aJax)
-		function replyCheck() {
-			let content = $("#content").val();
-			if (content.trim() == "") {
-				alert("댓글을 입력하세요.");
-				$("#content").focus();
-				return false;
-			}
-			let query = {
-					boardIdx	: ${vo.idx},
-					mid			: '${sMid}',
-					nickName	: '${sNickName}',
-					content		: content,
-					hostIp		: '${pageContext.request.remoteAddr}'
-			}
-			
-			$.ajax({
-				type	: "post",
-				url		: "${ctp}/BoardReplyInput.bo",
-				data	: query,
-				success	: function(res) {
-					if (res == "1") {
-						alert("댓글 작성 완료");
-						location.reload();
-					} else {
-						alert("댓글 작성 실패");
-					}
-				},
-				error	: function() {
-					alert("전송 오류");
-				}
-				
-			});
-		}
-		
-		// 댓글삭제 (aJax)
-		function replyDelete(replyIdx) {
-			let ans = confirm("댓글을 삭제하시겠습니까?");
-			if (!ans) return false;
-			
-			$.ajax({
-				type	:"post",
-				url		:"${ctp}/BoardReplyDelete.bo",
-				data	:{replyIdx: replyIdx},
-				success	:function(res) {
-					if (res == "1"){
-						alert("댓글 삭제 완료");
-						location.reload();
-					} else {
-						alert("댓글 삭제 실패");
-					}
-				},
-				error	:function() {
-					alert("전송 오류");
-				}
-			});
-		} */
 	</script>
 </head>
 <body>
@@ -109,11 +53,6 @@
 	<div class="container">
 		<h2 class="text-center">내 용</h2>
 		<br />
-		<table class="table table-borderless m-0 p-0">
-			<tr>
-				<td class="text-right">접속IP : ${vo.hostIp}</td>
-			</tr>
-		</table>
 		<table class="table table-bordered">
 			<tr>
 				<th>작성자</th>
@@ -132,11 +71,13 @@
 				<td>${vo.readNum}</td>
 				<th>좋아요</th>
 				<td>
+					<c:if test="${sLevel <= 100}">
+						<a href="javascript:goodCheck()">
+							<c:if test="${sSw == '1'}"><font color="#f00">❤</font></c:if>
+							<c:if test="${sSw != '1'}"><font color="#000">❤</font></c:if>
+						</a>️
+					</c:if>
 					${vo.good}
-					(<a href="javascript:goodCheck()">
-						<c:if test="${sSw == '1'}"><font color="#f00">❤</font></c:if>
-						<c:if test="${sSw != '1'}"><font color="#000">❤</font></c:if>
-					</a>️)
 				</td>
 			</tr>
 			<tr>
@@ -150,7 +91,7 @@
 					</c:if>
 					<c:if test="${flag != 'search'}">
 						<input type="button" value="목록으로" onclick="location.href='${ctp}/BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-primary" /> &nbsp;
-						<c:if test="${sMid == vo.mid || sLevel == 0}">
+						<c:if test="${sMid == vo.mid || sLevel == 0 || sLevel == 100}">
 							<input type="button" value="수정" onclick="location.href='${ctp}/BoardUpdate.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" /> &nbsp;
 							<input type="button" value="삭제" onclick="boardDelete()" class="btn btn-danger" />
 						</c:if>
@@ -166,6 +107,7 @@
 						<c:if test="${nextVo.nextIdx != 0}">
 							👆<a href="${ctp}/BoardContent.bo?idx=${nextVo.nextIdx}&pag=${pag}&pageSize=${pageSize}">다음글 : ${nextVo.nextTitle}</a><br />
 						</c:if>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="currentDate" />
 						<c:if test="${preVo.preIdx != 0}">
 							👇<a href="${ctp}/BoardContent.bo?idx=${preVo.preIdx}&pag=${pag}&pageSize=${pageSize}">이전글 : ${preVo.preTitle}</a>
 						</c:if>

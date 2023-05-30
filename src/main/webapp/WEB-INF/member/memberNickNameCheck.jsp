@@ -12,8 +12,8 @@
 		'use strict';
 		
 		function sendCheck() {
-			opener.window.document.myform.nickName.value = '${nickName}';
-			opener.window.document.myform.name.focus();
+			opener.window.document.joinForm.nickName.value = '${nickName}';
+			opener.window.document.joinForm.name.focus();
 			window.close();
 		}
 		
@@ -38,7 +38,7 @@
 			<p><input type="button" value="창닫기" onclick="sendCheck()"></p>
 		</c:if>
 		<c:if test="${res != 1}">
-			<h4><font color="blue"><b>${nickName}</b></font> 닉네임은 이미 사용중입니다.</h4>
+			<h4>이미 사용중인 닉네임입니다.</h4>
 			<form name="childForm" method="post" action="${ctp}/MemberNickNameCheck.mem">
 			 <p>
 			 	<input type="text" name="nickName" />

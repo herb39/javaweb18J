@@ -10,7 +10,9 @@
 	}
 	footer {
 		background-color: rgba( 255, 255, 255, 0.9 );
+		margin-top: 200px;
 	}
+	
 </style>
 <footer class="w3-container w3-padding-16 w3-center w3-opacity">
   <i class="fa fa-facebook-official w3-hover-opacity"></i>

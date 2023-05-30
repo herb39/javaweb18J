@@ -20,8 +20,6 @@ public class BoardUpdateOkCommand implements BoardInterface {
 		
 		String title = request.getParameter("title") == null ? "" : request.getParameter("title");
 		String content = request.getParameter("content") == null ? "" : request.getParameter("content");
-		String hostIp = request.getParameter("hostIp") == null ? "" : request.getParameter("hostIp");
-		String openSw = request.getParameter("openSw") == null ? "" : request.getParameter("openSw");
 		
 		BoardVO vo = new BoardVO();
 		
@@ -29,8 +27,6 @@ public class BoardUpdateOkCommand implements BoardInterface {
 		vo.setNickName(nickName);
 		vo.setTitle(title);
 		vo.setContent(content);
-		vo.setHostIp(hostIp);
-		vo.setOpenSw(openSw);
 		
 		BoardDAO dao = new BoardDAO();
 		

@@ -1,6 +1,7 @@
 package board;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -51,9 +52,9 @@ public class BoardContentCommand implements BoardInterface {
 		// 이전글 / 다음글
 		BoardVO preVo = dao.getPreNextSearch(idx, "preVo");
 		BoardVO nextVo = dao.getPreNextSearch(idx, "nextVo");
-		request.setAttribute("preVo", preVo);
+	    request.setAttribute("preVo", preVo);
 		request.setAttribute("nextVo", nextVo);
-
+		
 		// 해당 게시글에 좋아요 누르면 세션에 아이디 저장 -> sSw 값 1로 보내서 하트 빨간색 변경 유지
 		ArrayList<String> goodIdx = (ArrayList) session.getAttribute("sGoodIdx");
 		if (goodIdx == null) {
@@ -65,11 +66,6 @@ public class BoardContentCommand implements BoardInterface {
 		} else {
 			session.setAttribute("sSw", "0");
 		}
-		
-		
-//		// 본문에 딸린 댓글 가져오기
-//		ArrayList<BoardReplyVO>replyVos = dao.getBoardReply(idx);
-//		request.setAttribute("replyVos", replyVos);
 		
 	}
 

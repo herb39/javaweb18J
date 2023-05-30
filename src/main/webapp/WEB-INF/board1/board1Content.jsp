@@ -25,9 +25,11 @@
 			background-size: cover;
 		}
 		#cBox {
-			height: 220px;
+			height: 130px;
 			background-color: rgba( 255, 255, 255, 0.5 );
-			
+			text-align:center;
+			line-height: 110px;
+			font-size: 30px;
 		}
 	
 	</style>
@@ -35,7 +37,8 @@
 		'use strict';
 		
 		// 댓글쓰기 (aJax)
-		function replyCheck() {
+		function replyCheck(board1Idx) {
+			console.log("board1Idx: " + board1Idx);
 			let content = $("#content").val();
 			if (content.trim() == "") {
 				alert("댓글을 입력하세요.");
@@ -43,11 +46,11 @@
 				return false;
 			}
 			let query = {
-					boardIdx	: ${vo.idx},
+					board1Idx	: board1Idx,
 					mid			: '${sMid}',
 					nickName	: '${sNickName}',
 					content		: content,
-					hostIp		: '${pageContext.request.remoteAddr}',
+					level		: ${level}
 			}
 			
 			$.ajax({
@@ -69,14 +72,14 @@
 			});
 		}
 		
-		// 댓글삭제 (aJax)
-		/* function replyDelete(replyIdx) {
+		// 댓글삭제
+		function replyDelete(replyIdx) {
 			let ans = confirm("댓글을 삭제하시겠습니까?");
 			if (!ans) return false;
 			
 			$.ajax({
 				type	:"post",
-				url		:"${ctp}/BoardReplyDelete.bo",
+				url		:"${ctp}/Board1ReplyDelete.tsb",
 				data	:{replyIdx: replyIdx},
 				success	:function(res) {
 					if (res == "1"){
@@ -90,7 +93,23 @@
 					alert("전송 오류");
 				}
 			});
-		} */
+		}
+		
+		// 댓글 좋아요
+		function goodCheck(replyIdx) {
+			$.ajax({
+				type	: "post",
+				url		: "${ctp}/Board1ReplyGoodCheckAjax.tsb",
+				data	: {replyIdx : replyIdx},
+				success	: function(res) {
+					if (res == "0") alert("이미 '좋아요'를 누르셨습니다.");
+					else location.reload();
+				},
+				error	: function() {
+					alert("전송 오류");
+				}
+			});
+		}
 	</script>
 </head>
 <body>
@@ -125,19 +144,30 @@
 		<div class="container">
 			<table class="table table-hover text-left">
 				<tr>
-					<th> &nbsp;작성자</th>
+					<th>작성자</th>
 					<th>내용</th>
-					<th>작성일</th>
+					<th>작성시간</th>
+					<th>좋아요</th>
+					
 				</tr>
 				<c:forEach var="replyVo" items="${replyVos}" varStatus="st">
 					<tr>
-						<td class="text-center"><span class="badge badge-pill badge-secondary">LV.${vo.level}</span> ${replyVO.nickName}
-							<c:if test="${sMid == replyVO.mid || sLevel == 0}">
-								<a href="javascript:replyDelete(${replyVO.idx})" title="댓글삭제" id="deleteReply" style="color: red"><b>&times;</b></a>
+						<td class="text-center col-2"><span class="badge badge-pill badge-secondary">LV.${replyVo.level}</span> ${replyVo.nickName}
+							<c:if test="${sMid == replyVo.mid || sLevel == 0 || sLevel == 100}">
+								<a href="javascript:replyDelete(${replyVo.idx})" title="댓글삭제" id="deleteReply" style="color: red"><b>&times;</b></a>
 							</c:if>
 						</td>
-						<td>${fn:replace(replyVO.content, newLine, "<br />")}</td>
-						<td class="text-center">${fn:substring(replyVO.wDate, 0, 16)}</td>
+						<td>${fn:replace(replyVo.content, newLine, "<br />")}</td>
+						<td class="text-center col-3">${fn:substring(replyVo.wDate, 0, 16)}</td>
+						<td class="text-center col-1">
+							<c:if test="${level <= 100}">
+								<a href="javascript:goodCheck(${replyVo.idx})">
+									<c:if test="${sSw == '1'}"><font color="#f00">❤</font></c:if>
+									<c:if test="${sSw != '1'}"><font color="#000">❤</font></c:if>
+								</a>
+							</c:if>
+							${replyVo.good}
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -149,13 +179,12 @@
 				<table class="table table-center">
 					<tr>
 						<td style="width: 85%" class="text-left">
-							내용
-							<textarea rows="4" name="content" id="content" class="form-control"></textarea>
+							<span>${sNickName}님의 의견을 들려주세요!</span> &nbsp;
+							<input type="button" value="댓글작성" onclick="replyCheck(${vo.idx})" class="btn btn-info btn-sm" />
+							<textarea rows="4" name="content" id="content" class="form-control mt-2"></textarea>
 						</td>
 						<td style="width: 15%">
 							<br />
-							<p>작성자 ${sNickName}</p>
-							<input type="button" value="댓글쓰기" onclick="replyCheck()" class="btn btn-info btn-sm" />
 						</td>
 					</tr>
 				</table>

@@ -32,7 +32,6 @@ public class MemberMainCommand implements MemberInterface {
 		}
 		request.setAttribute("point", vo.getPoint());
 		request.setAttribute("level", level);
-		request.setAttribute("image", vo.getImage());
 		
 		
 		// 사용자의 게시판 작성 횟수 가져오기

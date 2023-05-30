@@ -63,7 +63,7 @@
 	<jsp:include page="/include/header.jsp" />
 	<p><br /></p>
 	<div class="container">
-		<h2 class="text-center">지 난 주 제  게 시 판</h2>
+		<h2 class="text-center">토 론 게 시 판</h2>
 		<table class="table table-borderless">
 			<tr>
 				<td class="text-right">
@@ -80,23 +80,23 @@
 		</table>
 		<table class="table table-hover text-center">
 			<tr class="table-dark text-dark">
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
+				<th class="col-1">번호</th>
+				<th class="col-5">제목</th>
+				<th class="col-3">작성자</th>
+				<th class="col-2">날짜</th>
 			</tr>
 			<c:forEach var="vo" items="${vos}" varStatus="st">
-				<tr>
-					<td>${curScrStartNo}</td>
-					<td class="text-left">
-						<a href="${ctp}/Board1Content.tsb?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
-			        	<c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if>
-					</td>
-					<td>
-						<span class="badge badge-pill badge-secondary">LV.${vo.level}</span> ${vo.nickName}
-					</td>
-					<td>${fn:substring(vo.wDate,0,10)}</td>
-				</tr>
+					<tr>
+						<td>${curScrStartNo}</td>
+						<td class="text-left">
+							<a href="${ctp}/Board1Content.tsb?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
+				        	<c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if>
+						</td>
+						<td>
+							<span class="badge badge-pill badge-secondary">LV.${vo.level}</span> ${vo.nickName}
+						</td>
+						<td>${fn:substring(vo.wDate,0,10)}</td>
+					</tr>
 				<c:set var="curScrStartNo" value="${curScrStartNo - 1}" />
 			</c:forEach>
 			<tr>
@@ -142,6 +142,7 @@
 				</c:if>
 			</ul>
 		</div>
+		
 		<!-- 검색 -->
 		<div class="container text-center">
 			<form name="searchForm" method="post" action="${ctp}/Board1Search.tsb">
@@ -157,6 +158,7 @@
 				<input type="hidden" name="pageSize" value="${pageSize}" />
 			</form>
 		</div>
+		
 	</div>
 	<p><br /></p>
 	<jsp:include page="/include/footer.jsp" />

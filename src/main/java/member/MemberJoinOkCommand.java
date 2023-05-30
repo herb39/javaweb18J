@@ -7,9 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
 import conn.SecurityUtil;
 
 
@@ -17,9 +14,6 @@ public class MemberJoinOkCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 회원 사진이 업로드 여부 처리
-		String image = "noimage.jpg";
-		
 		String mid = request.getParameter("mid") == null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
 		String nickName = request.getParameter("nickName") == null ? "" : request.getParameter("nickName");
@@ -60,7 +54,6 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo.setNickName(nickName);
 		vo.setName(name);
 		vo.setEmail(email);
-		vo.setImage(image);
 		vo.setSalt(salt);
 		
 		int res = dao.setMemberJoinOk(vo);

@@ -3,16 +3,13 @@ package board;
 public class BoardVO {
 	private int idx;
 	private String mid;
-	private int level;
 	private String nickName;
-	private String image;
 	private String title;
 	private String content;
 	private int readNum;
-	private String hostIp;
-	private String openSw;
 	private String wDate;
 	private int good;
+	private int memberIdx;
 	
 	// 날짜 차이 계산
 	private int day_diff;	// 1일 차이
@@ -24,8 +21,9 @@ public class BoardVO {
 	private String preTitle;
 	private String nextTitle;
 	
+	private int level;
 	private int replyCount; // 댓글 개수
-
+	
 	
 	public int getIdx() {
 		return idx;
@@ -39,23 +37,11 @@ public class BoardVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
 	public String getNickName() {
 		return nickName;
 	}
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
 	}
 	public String getTitle() {
 		return title;
@@ -75,18 +61,6 @@ public class BoardVO {
 	public void setReadNum(int readNum) {
 		this.readNum = readNum;
 	}
-	public String getHostIp() {
-		return hostIp;
-	}
-	public void setHostIp(String hostIp) {
-		this.hostIp = hostIp;
-	}
-	public String getOpenSw() {
-		return openSw;
-	}
-	public void setOpenSw(String openSw) {
-		this.openSw = openSw;
-	}
 	public String getwDate() {
 		return wDate;
 	}
@@ -98,6 +72,12 @@ public class BoardVO {
 	}
 	public void setGood(int good) {
 		this.good = good;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
 	}
 	public int getDay_diff() {
 		return day_diff;
@@ -135,6 +115,12 @@ public class BoardVO {
 	public void setNextTitle(String nextTitle) {
 		this.nextTitle = nextTitle;
 	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public int getReplyCount() {
 		return replyCount;
 	}
@@ -144,10 +130,10 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "BoardVO [idx=" + idx + ", mid=" + mid + ", level=" + level + ", nickName=" + nickName + ", image="
-				+ image + ", title=" + title + ", content=" + content + ", readNum=" + readNum + ", hostIp=" + hostIp
-				+ ", openSw=" + openSw + ", wDate=" + wDate + ", good=" + good + ", day_diff=" + day_diff
-				+ ", hour_diff=" + hour_diff + ", preIdx=" + preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle
-				+ ", nextTitle=" + nextTitle + ", replyCount=" + replyCount + "]";
+		return "BoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", content="
+				+ content + ", readNum=" + readNum + ", wDate=" + wDate + ", good=" + good
+				+ ", memberIdx=" + memberIdx + ", day_diff=" + day_diff + ", hour_diff=" + hour_diff + ", preIdx="
+				+ preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle + ", nextTitle=" + nextTitle + ", level="
+				+ level + ", replyCount=" + replyCount + "]";
 	}
 }

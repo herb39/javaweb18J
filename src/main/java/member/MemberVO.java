@@ -7,7 +7,6 @@ public class MemberVO {
 	private String nickName;
 	private String name;
 	private String email;
-	private String image;
 	private String userDel;
 	private int point;
 	private int level;
@@ -50,12 +49,6 @@ public class MemberVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
 	public int getPoint() {
 		return point;
 	}
@@ -84,7 +77,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
-				+ ", email=" + email + ", image=" + image + ", point=" + point + ", userDel=" + userDel + ", level="
+				+ ", email=" + email + ", point=" + point + ", userDel=" + userDel + ", level="
 				+ level + ", salt=" + salt + "]";
 	}
 }

@@ -11,9 +11,6 @@ public class MemberUpdateOkCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 프로필 사진 업로드 되었는지 ?
-		String image = "noimage.jpg";
-		
 		HttpSession session = request.getSession();
 		String mid = (String) session.getAttribute("sMid");
 		String sNickName = (String) session.getAttribute("sNickName");
@@ -24,7 +21,7 @@ public class MemberUpdateOkCommand implements MemberInterface {
 		
 		
 		// BackEnd check : DB에 저장되는 자료의 Null값, 길이, 중복여부 체크
-		// 아이디, 닉네임 중복 체크
+		// 닉네임 중복 체크
 		MemberDAO dao = new MemberDAO();
 		
 		if (!nickName.equals(sNickName)) {
@@ -42,7 +39,6 @@ public class MemberUpdateOkCommand implements MemberInterface {
 		vo.setNickName(nickName);
 		vo.setName(name);
 		vo.setEmail(email);
-		vo.setImage(image);
 		
 		int res = dao.setMemberUpdateOk(vo);
 		

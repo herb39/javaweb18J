@@ -8,6 +8,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>memberPwdCheckForm.jsp</title>
 	<jsp:include page="/include/bs4.jsp" />
+	<style>
+		body {
+			height: 100%;
+			min-height: 600px;
+			background: url(./images/paper-g44ca06ba8_1280.jpg) no-repeat center center fixed;
+			background-size: cover;
+		}
+	</style>
 	<script>
 		'use strict';
 		
@@ -18,7 +26,7 @@
 				alert("기존 비밀번호를 입력하세요.");
 				document.getElementById("pwd").focus();
 			} else {
-				myform.submit();
+				pwForm.submit();
 			}
 		}
 	</script>
@@ -27,7 +35,7 @@
 <jsp:include page="/include/header.jsp" />
 	<p><br /></p>
 	<div class="container">
-		<form name="myform" method="post" action="${ctp}/MemberPwdCheckOk.mem" class="was-validated">
+		<form name="pwForm" method="post" action="${ctp}/MemberPwdCheckOk.mem" class="was-validated">
 			<h2 class="text-center">회원 정보 수정</h2>
 			<br />
 			<table class="table table-bordered">

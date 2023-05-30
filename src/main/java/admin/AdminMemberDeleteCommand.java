@@ -1,4 +1,4 @@
-package board;
+package admin;
 
 import java.io.IOException;
 
@@ -6,17 +6,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BoardGoodPlusMinusCommand implements BoardInterface {
+import member.MemberDAO;
+
+public class AdminMemberDeleteCommand implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		int goodCnt = Integer.parseInt(request.getParameter("goodCnt"));
 		
-		BoardDAO dao = new BoardDAO();
+		MemberDAO dao = new MemberDAO();
 		
-		dao.setGoodPlusMinus(idx, goodCnt);
+		dao.setMemberDelete(idx);
 		
 	}
-
 }

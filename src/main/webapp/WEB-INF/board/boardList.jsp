@@ -11,7 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>boardList.jsp</title>
+	<title>Hello, World!</title>
 	<jsp:include page="/include/bs4.jsp" />
 	<style>
 		body {
@@ -63,7 +63,7 @@
 	<jsp:include page="/include/header.jsp" />
 	<p><br /></p>
 	<div class="container">
-		<h2 class="text-center">게 시 판</h2>
+		<h2 class="text-center">주제선정 게시판</h2>
 		<table class="table table-borderless">
 			<tr>
 				<td>
@@ -90,12 +90,12 @@
 		</table>
 		<table class="table table-hover text-center">
 			<tr class="table-dark text-dark">
-				<th>번호</th>
+				<th class="col-1">번호</th>
 				<th>제목</th>
-				<th>작성자</th>
-				<th>작성시간</th>
-				<th>조회</th>
-				<th>좋아요</th>
+				<th class="col-2">작성자</th>
+				<th class="col-2">작성시간</th>
+				<th class="col-1">조회</th>
+				<th class="col-1">좋아요</th>
 			</tr>
 			<c:forEach var="vo" items="${vos}" varStatus="st">
 				<c:if test="${vo.day_diff == 0}">
@@ -103,15 +103,11 @@
 						<td>${curScrStartNo}</td>
 						<td class="text-left">
 							<a href="${ctp}/BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
-				        	<c:if test="${vo.replyCount != 0}">(${vo.replyCount})</c:if>
 						</td>
 						<td>
 							<span class="badge badge-pill badge-secondary">LV.${vo.level}</span> ${vo.nickName}
 						</td>
-						<td>
-							<c:if test="${vo.hour_diff > 24}">${fn:substring(vo.wDate,0,10)}</c:if>
-							<c:if test="${vo.hour_diff <= 24}">${vo.day_diff == 0 ? fn:substring(vo.wDate,11,16) : fn:substring(vo.wDate,0,10)}</c:if>
-						</td>
+						<td>${fn:substring(vo.wDate,11,16)}</td>
 						<td>${vo.readNum}</td>
 						<td>${vo.good}</td>
 					</tr>

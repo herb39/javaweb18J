@@ -12,8 +12,8 @@
 		'use strict';
 		
 		function sendCheck() {
-			opener.window.document.myform.mid.value = '${mid}';
-			opener.window.document.myform.pwd.focus();
+			opener.window.document.joinForm.mid.value = '${mid}';
+			opener.window.document.joinForm.pwd.focus();
 			window.close();
 		}
 		
@@ -38,7 +38,7 @@
 			<p><input type="button" value="창닫기" onclick="sendCheck()"></p>
 		</c:if>
 		<c:if test="${res != 1}">
-			<h4><font color="blue"><b>${mid}</b></font> 아이디는 이미 사용중인 아이디입니다.</h4>
+			<h4>이미 사용중인 아이디입니다.</h4>
 			<form name="childForm" method="post" action="${ctp}/MemberIdCheck.mem">
 			 <p>
 			 	<input type="text" name="mid" />

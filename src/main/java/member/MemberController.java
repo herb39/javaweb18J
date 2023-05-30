@@ -47,7 +47,7 @@ public class MemberController extends HttpServlet {
 			command = new MemberJoinOkCommand();
 			command.execute(request, response);
 			return;
-		} else if (level > 4) { // 비회원 초기화면으로 보내기
+		} else if (level > 100) { // 비회원 초기화면으로 보내기
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
 		} else if (com.equals("/MemberMain")) {
@@ -68,8 +68,8 @@ public class MemberController extends HttpServlet {
 			command = new MemberPwdUpdateOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		} else if (com.equals("/MemberPwdCheckForm")) {
-			viewPage += "/memberPwdCheckForm.jsp";
+//		} else if (com.equals("/MemberPwdCheckForm")) {
+//			viewPage += "/memberPwdCheckForm.jsp";
 		} else if (com.equals("/MemberPwdCheckOk")) {
 			command = new MemberPwdCheckOkCommand();
 			command.execute(request, response);

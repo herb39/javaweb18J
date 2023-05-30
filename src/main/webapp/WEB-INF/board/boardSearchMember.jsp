@@ -9,9 +9,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>title</title>
 	<jsp:include page="/include/bs4.jsp" />
-	<script>
-		'use strict';
-	</script>
+<style>
+	body {
+		height: 100%;
+		min-height: 600px;
+		background: url(./images/paper-g44ca06ba8_1280.jpg) no-repeat center center fixed;
+		background-size: cover;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />

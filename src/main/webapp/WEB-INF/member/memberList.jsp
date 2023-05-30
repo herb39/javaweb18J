@@ -8,6 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>memberList.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
+  <style>
+  	body {
+			height: 100%;
+			min-height: 600px;
+			background: url(./images/paper-g44ca06ba8_1280.jpg) no-repeat center center fixed;
+			background-size: cover;
+  </style>
   <script>
     'use strict';
     
@@ -43,20 +50,15 @@
     <tr class="table-dark text-dark">
       <th>번호</th>
       <th>아이디</th>
-      <th>별명</th>
+      <th>닉네임</th>
       <th>성명</th>
-      <th>성별</th>
     </tr>
     <c:forEach var="vo" items="${vos}" varStatus="st">
       <tr>
         <td>${curScrStartNo}</td>
         <td>${vo.mid}</td>
         <td>${vo.nickName}</td>
-        <td>
-          <c:if test="${vo.userInfor == '공개'}">${vo.name}</c:if>
-          <c:if test="${vo.userInfor != '공개'}"><font color="gray">비공개</font></c:if>
-        </td>
-        <td>${vo.gender}</td>
+        <td>${vo.name}</td>
       </tr>
       <c:set var="curScrStartNo" value="${curScrStartNo - 1}"/>
     </c:forEach>

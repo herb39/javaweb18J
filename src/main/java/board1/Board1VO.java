@@ -7,11 +7,8 @@ public class Board1VO {
 	private String nickName;
 	private String title;
 	private String content;
-	private String hostIp;
 	private String wDate;
-	private int level;
-	private String image;
-	
+	private int memberIdx;
 	// 날짜 차이 계산
 	private int day_diff;	// 1일 차이
 	private int hour_diff;	// 24시간 차이
@@ -22,9 +19,10 @@ public class Board1VO {
 	private String preTitle;
 	private String nextTitle;
 	
+	private int level;
 	private int replyCount; // 댓글 개수
-	
 
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -61,12 +59,6 @@ public class Board1VO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getHostIp() {
-		return hostIp;
-	}
-	public void setHostIp(String hostIp) {
-		this.hostIp = hostIp;
-	}
 	public String getwDate() {
 		return wDate;
 	}
@@ -78,12 +70,6 @@ public class Board1VO {
 	}
 	public void setLevel(int level) {
 		this.level = level;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
 	}
 	public int getDay_diff() {
 		return day_diff;
@@ -127,13 +113,19 @@ public class Board1VO {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
+	public void setMemberIdx(int memberIdx) {
+		this.memberIdx = memberIdx;
+	}
 	
 	@Override
 	public String toString() {
 		return "Board1VO [idx=" + idx + ", boardIdx=" + boardIdx + ", mid=" + mid + ", nickName=" + nickName
-				+ ", title=" + title + ", content=" + content + ", hostIp=" + hostIp + ", wDate=" + wDate + ", level="
-				+ level + ", image=" + image + ", day_diff=" + day_diff + ", hour_diff=" + hour_diff + ", preIdx="
-				+ preIdx + ", nextIdx=" + nextIdx + ", preTitle=" + preTitle + ", nextTitle=" + nextTitle
-				+ ", replyCount=" + replyCount + "]";
+				+ ", title=" + title + ", content=" + content + ", wDate=" + wDate + ", memberIdx=" + memberIdx
+				+ ", day_diff=" + day_diff + ", hour_diff=" + hour_diff + ", preIdx=" + preIdx + ", nextIdx=" + nextIdx
+				+ ", preTitle=" + preTitle + ", nextTitle=" + nextTitle + ", level=" + level + ", replyCount="
+				+ replyCount + "]";
 	}
 }

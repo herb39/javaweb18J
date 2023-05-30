@@ -13,6 +13,25 @@ create table board (
 	primary key(idx)
 );
 
+
+CREATE TABLE `board` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `mid` varchar(20) NOT NULL,
+  `nickName` varchar(20) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `readNum` int DEFAULT '0',
+  `wDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `good` int DEFAULT '0',
+  memberIdx int not null,
+  PRIMARY KEY (`idx`),
+	foreign key(memberIdx) references member(idx)    /* 외래키 설정: 반드시 고유한 키여야만 한다. */
+	on update cascade															 /* 원본의 변경을 따라간다. */
+	on delete cascade	
+);
+
+
+
 desc board;
 
 insert into board values (default,'admin','관리맨','게시판 서비스를 시작합니다.','admin@naver.com','admin.tistory.com','이곳은 게시판입니다.',default,'192.168.50.96',default,default,default);

@@ -16,6 +16,20 @@ create table member (
 	primary key (idx, mid)
 );
 
+CREATE TABLE `member` (
+  `idx` int NOT NULL AUTO_INCREMENT,
+  `mid` varchar(20) NOT NULL,
+  `pwd` varchar(100) NOT NULL,
+  `nickName` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `userDel` char(2) DEFAULT 'NO',
+  `point` int DEFAULT '0',
+  `level` int DEFAULT '1',
+  `salt` char(8) NOT NULL,
+  PRIMARY KEY (`idx`,`mid`)
+);
+
 
 alter table member alter column point set default 0;
 
@@ -31,6 +45,32 @@ alter table member add salt char(8);
 
 drop table member;
 
+
+ALTER TABLE board
+ADD COLUMN memberIdx INT NOT NULL,
+ADD FOREIGN KEY (memberIdx) REFERENCES member(idx);
+
+ALTER TABLE board1
+ADD COLUMN memberIdx INT NOT NULL,
+ADD FOREIGN KEY (memberIdx) REFERENCES member(idx);
+
+ALTER TABLE board1Reply
+ADD COLUMN memberIdx INT NOT NULL,
+ADD FOREIGN KEY (memberIdx) REFERENCES member(idx);
+
+
+
+ALTER TABLE board
+DROP FOREIGN KEY board_ibfk_1,
+DROP COLUMN memberIdx;
+
+ALTER TABLE board1
+DROP FOREIGN KEY board1_ibfk_2,
+DROP COLUMN memberIdx;
+
+ALTER TABLE board1Reply
+DROP FOREIGN KEY board1Reply_ibfk_2,
+DROP COLUMN memberIdx;
 
 
 

@@ -33,10 +33,16 @@ public class MemberLoginOkCommand implements MemberInterface {
 		if (!pwd.equals(vo.getPwd())) return;
 		
 		
+		
+		// level up
+		dao.updateLevelAndResetPoint();
+		
+		
 		// 로그인 성공시 처리할 내용 ?
 		
 		// 1. 주요필드 세션에 저장
 		HttpSession session = request.getSession();
+		session.setAttribute("sIdx", vo.getIdx());
 		session.setAttribute("sMid", mid);
 		session.setAttribute("sNickName", vo.getNickName());
 		session.setAttribute("sLevel", vo.getLevel());
